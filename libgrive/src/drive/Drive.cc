@@ -99,7 +99,7 @@ void Drive::SyncFolders( )
 	Log( "Synchronizing folders", log::info ) ;
 
 	http::XmlResponse xml ;
-	m_http->Get( feed_base + "/-/folder?max-results=50&showroot=true", &xml, http::Header() ) ;
+	m_http->Get( feed_base + "/-/folder?max-results=50&showroot=true&v=3", &xml, http::Header() ) ;
 	
 	Feed feed( xml.Response() ) ;
 	do
@@ -140,7 +140,7 @@ void Drive::DetectChanges()
 	if ( m_options["log-xml"].Bool() )
 		feed.EnableLog( "/tmp/file", ".xml" ) ;
 	
-	feed.Start( m_http, feed_base + "?showfolders=true&showroot=true" ) ;
+	feed.Start( m_http, feed_base + "?showfolders=true&showroot=true&v=3" ) ;
 	
 	m_resume_link = feed.Root()["link"].
 		Find( "@rel", "http://schemas.google.com/g/2005#resumable-create-media" )["@href"] ;
